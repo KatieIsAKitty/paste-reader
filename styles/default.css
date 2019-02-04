@@ -1,117 +1,25 @@
-.body {
+@import url('https://s.gc.gy/fira/FiraCode.css');
+
+body {
   background: #191919;
   color: #d4d4d4;
   height: 100%;
 }
-.body {
-  background: #191919;
-  color: #d4d4d4;
-  height: 100%;
-}
-.body {
-  background: #191919;
-  color: #d4d4d4;
-  height: 100%;
+
+* {
+  font-family: 'FiraCode';
+  font-size: 10pt
 }
 
 .content {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #212121;
+  background: #191919;
+  height: 100%;
 }
 
-.btn,
-.button,
-button,
-input[type=button],
-input[type=submit] {
-  font: inherit;
-  cursor: pointer;
-  text-align: center;
-  padding: 6px 16px;
-  color: #3F3F3F;
-  border: 1px solid #efefef;
-  background: #FFF;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-bottom: 10px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  display: -moz-inline-stack;
-  display: inline-block;
-  *zoom: 1;
-  *display: inline;
+form {
+  color: #d4d4d4;
 }
 
-.btn.dropdown,
-.button.dropdown,
-button.dropdown {
-  cursor: pointer;
-}
-
-.btn.dropdown > span::after,
-.button.dropdown > span::after,
-button.dropdown > span::after {
-  content: " ▾";
-}
-
-.btn.dropdown > ul,
-.button.dropdown > ul,
-button.dropdown > ul {
-  display: none;
-  position: absolute;
-  list-style: none;
-  min-width: 150px;
-  padding: 0;
-  margin: 8px 0 0 -17px;
-  text-align: left;
-  background: #FCFCFC;
-  border: 1px solid #efefef;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-}
-
-.btn.dropdown > ul li,
-.button.dropdown > ul li,
-button.dropdown > ul li {
-  padding: 13px 18px;
-}
-
-.btn.dropdown > ul li a,
-.button.dropdown > ul li a,
-button.dropdown > ul li a {
-  color: #3F3F3F;
-}
-
-.btn.dropdown > ul li:hover, .btn.dropdown > ul li:active,
-.button.dropdown > ul li:hover,
-.button.dropdown > ul li:active,
-button.dropdown > ul li:hover,
-button.dropdown > ul li:active {
-  color: #3F3F3F;
-  background: #f9f9f9;
-}
-
-.btn.dropdown.open > ul,
-.button.dropdown.open > ul,
-button.dropdown.open > ul,
-input[type=button].dropdown.open > ul,
-input[type=submit].dropdown.open > ul {
-  display: block;
-}
-
-.btn.dropdown:hover > ul, .btn.dropdown:active > ul,
-.button.dropdown:hover > ul,
-.button.dropdown:active > ul,
-button.dropdown:hover > ul,
-button.dropdown:active > ul,
-input[type=button].dropdown:hover > ul,
-input[type=button].dropdown:active > ul,
-input[type=submit].dropdown:hover > ul,
-input[type=submit].dropdown:active > ul {
-  display: block;
-}
