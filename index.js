@@ -4,17 +4,31 @@
 
 const http = require('http');
 const { inspect } = require('util');
-const { readFile } = require('fs');
+const { readFile, readdir } = require('fs').promises;
 
-function handleConnect(req, res) {
-  if (req.url === '/') {
-    readFile('./main.html', (html) => {
-      res.setHeader('Content-Type', 'text/html');
-      res.end(html);
-    });
+const indexPaths = ['/', '/index.js', '', null, 'null', undefined];
+
+
+async function handleConnect(req, res) {
+  console.log(req.url);
+  const stylePaths = await readdir('./styles/');
+  for (let i = 0; i < stylePaths.length; i += 1) {
+    console.log(stylePaths[i]);
+    stylePaths[i] = `/styles/${stylePaths[i]}`;
+  }
+  console.log(stylePaths);
+  if (indexPaths.includes(req.url)) {
+    const html = await readFile('./templates/main.html');
+    res.setHeader('Content-Type', 'text/html');
+    res.end(html);
     return;
   }
-  console.log(req.url);
+  if (stylePaths.includes(req.url)) {
+    const css = await readFile(`.${req.url}`);
+    res.setHeader('Content-Type', 'text/css');
+    res.end(css);
+    return;
+  }
   res.setHeader('Content-Type', 'application/json');
   res.end(inspect({ headers: res.getHeaders() }));
 }
