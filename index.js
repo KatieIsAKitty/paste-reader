@@ -25,8 +25,11 @@ const server = createServer(async (req, res) => {
     res.end(css);
     return;
   }
-  if (req.url.startsWith('/https://pastebin.com/') || req.url.startsWith('/pastebin.com/')) {
-    const url = req.url.replace(/\/(https:\/\/)?pastebin.com\//i, '');
+  let url = new URL(req.url, 'http://example.com/').searchParams.get('url');
+  if (/(https:\/\/)?pastebin.com\//.test(url)) {
+    console.log(`log: ${url}`);
+    url = url.replace(/(https:\/+)?pastebin.com\//i, '');
+    console.log(`log: ${url}`);
     get(`http://pastebin.com/raw/${url}`, async (chunks) => {
       let paste = `<html><head><link rel="stylesheet" type="text/css" href="http://${server.address().address}:${server.address().port}/styles/default.css"></head><body>`;
       for await (const chunk of chunks) {
@@ -39,7 +42,7 @@ const server = createServer(async (req, res) => {
     });
     return;
   }
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'text/html');
   res.end('you did a bad, try again');
 });
 
