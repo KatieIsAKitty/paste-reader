@@ -1,14 +1,12 @@
-/* eslint-disable no-console */
-
 'use strict';
 
 const { createServer, get } = require('http');
 const { readFile, readdir } = require('fs').promises;
+const config = require('./config.js').default;
 
 const indexPaths = ['/', '/index.js', '', null, 'null', undefined];
 
 const server = createServer(async (req, res) => {
-  console.log(req.url);
   const stylePaths = await readdir('./styles/');
   for (let i = 0; i < stylePaths.length; i += 1) {
     stylePaths[i] = `/styles/${stylePaths[i]}`;
@@ -26,11 +24,9 @@ const server = createServer(async (req, res) => {
     return;
   }
   let url = new URL(req.url, 'http://example.com/').searchParams.get('url');
-  if (/(https:\/\/)?pastebin.com\//.test(url)) {
-    console.log(`log: ${url}`);
-    url = url.replace(/(https:\/+)?pastebin.com\//i, '');
-    console.log(`log: ${url}`);
-    get(`http://pastebin.com/raw/${url}`, async (chunks) => {
+  if (config.conditions.some((condition) => condition.test(url))) {
+    url = url.replace('https:', 'http:');
+    get(url, async (chunks) => {
       let paste = `<html><head><link rel="stylesheet" type="text/css" href="http://${server.address().address}:${server.address().port}/styles/default.css"></head><body>`;
       for await (const chunk of chunks) {
         paste += chunk;
@@ -46,5 +42,5 @@ const server = createServer(async (req, res) => {
   res.end('you did a bad, try again');
 });
 
-server.listen({ port: 8080, host: '127.0.0.1' });
-server.on('listening', () => console.log(server.address()));
+server.listen({ port: config.port, host: config.host });
+server.on('listening', () => console.log(server.address())); // eslint-disable-line no-console
